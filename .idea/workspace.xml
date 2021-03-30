@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="96f3dcc2-d216-400a-8393-39f4533370d4" name="Default Changelist" comment="" />
+    <list default="true" id="96f3dcc2-d216-400a-8393-39f4533370d4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gmall-core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gmall-core/pom.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,16 +39,59 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="jdk.selected.JAVA_MODULE" value="1.8" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="preferences.customizations" />
   </component>
-  <component name="RunManager">
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.GmallAdminMainApplication">
     <configuration name="GmallAdminMainApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="gmall-admin" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.atguigu.GmallAdminMainApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GmallOmsApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="gmall-oms" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.atguigu.gmall.oms.GmallOmsApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GmallPmsApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="gmall-pms" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.atguigu.gmall.pms.GmallPmsApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GmallSmsApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="gmall-sms" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.atguigu.gmall.sms.GmallSmsApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GmallUmsApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="gmall-ums" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.atguigu.gmall.ums.GmallUmsApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GmallWmsApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="gmall-wms" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.atguigu.gmall.wms.GmallWmsApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -62,26 +108,61 @@
       <option name="presentableId" value="Default" />
       <updated>1617113600815</updated>
       <workItem from="1617113605585" duration="1165000" />
-      <workItem from="1617114788748" duration="884000" />
+      <workItem from="1617114788748" duration="3896000" />
     </task>
+    <task id="LOCAL-00001" summary="宋洋修改代码">
+      <created>1617116312879</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1617116312879</updated>
+    </task>
+    <task id="LOCAL-00002" summary="宋洋修改代码">
+      <created>1617116600077</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1617116600077</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="宋洋修改代码" />
+    <option name="LAST_COMMIT_MESSAGE" value="宋洋修改代码" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="208" y="0" key="CommitChangelistDialog2" timestamp="1617113854763">
+    <state x="413" y="56" key="#com.intellij.ide.ui.customization.CustomizableActionsPanel.FindAvailableActionsDialog" timestamp="1617117009836">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="208" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1617113854763" />
+    <state x="413" y="56" key="#com.intellij.ide.ui.customization.CustomizableActionsPanel.FindAvailableActionsDialog/0.0.1280.680@0.0.1280.680" timestamp="1617117009836" />
+    <state x="208" y="0" key="CommitChangelistDialog2" timestamp="1617116599266">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="208" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1617116599266" />
     <state x="366" y="96" key="FileChooserDialogImpl" timestamp="1617114869214">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="366" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1617114869214" />
-    <state x="-2" y="0" width="1175" height="680" key="SettingsEditor" timestamp="1617114995864">
+    <state x="-2" y="0" width="1175" height="680" key="SettingsEditor" timestamp="1617117182020">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="-2" y="0" width="1175" height="680" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1617114995864" />
+    <state x="-2" y="0" width="1175" height="680" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1617117182020" />
+    <state x="233" y="74" key="Vcs.Push.Dialog.v2" timestamp="1617116889427">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="233" y="74" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1617116889427" />
+    <state x="438" y="254" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1617116655114">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="438" y="254" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1617116655114" />
+    <state x="28" y="1" key="new project wizard" timestamp="1617118457196">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="28" y="1" key="new project wizard/0.0.1280.680@0.0.1280.680" timestamp="1617118457196" />
     <state x="297" y="151" width="672" height="677" key="run.anything.popup" timestamp="1617113951526">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
