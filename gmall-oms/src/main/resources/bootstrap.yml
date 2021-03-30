@@ -1,11 +1,11 @@
 spring:
   application:
-    name: pms-service
+    name: oms-service
   cloud:
     nacos:
       config:
         server-addr: 127.0.0.1:8848
-        namespace: 44ea9a5d-3723-4413-a3f2-ed73f24683fc
+        namespace: 2afaf49c-6c7c-4e09-9ceb-069b96731d8d
         group: dev
 #        文件后缀
         file-extension: yml
