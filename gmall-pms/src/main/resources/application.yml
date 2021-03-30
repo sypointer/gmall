@@ -2,7 +2,7 @@ server:
   port: 8081
 #\u6CE8\u518C\u4E2D\u5FC3\u5730\u5740
 spring:
-#  1.自己在网上查的启动时datasource报错
+#  1.自己在网上查的启动时datasource报错,可以暂时先用着
   main:
     allow-bean-definition-overriding: true
   cloud:
