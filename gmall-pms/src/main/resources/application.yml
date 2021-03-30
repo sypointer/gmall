@@ -1,0 +1,17 @@
+server:
+  port: 8081
+#\u6CE8\u518C\u4E2D\u5FC3\u5730\u5740
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/guli_pms?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: root
+  redis:
+    host: 127.0.0.1
+mybatis-plus:
+  mapper-locations: classpath:mapper/pms/**/*.xml
