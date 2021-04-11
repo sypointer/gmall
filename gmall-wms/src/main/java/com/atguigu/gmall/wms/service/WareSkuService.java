@@ -5,6 +5,8 @@ import com.atguigu.gmall.wms.entity.WareSkuEntity;
 import com.atguigu.core.bean.PageVo;
 import com.atguigu.core.bean.QueryCondition;
 
+import java.util.List;
+
 
 /**
  * 商品库存

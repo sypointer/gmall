@@ -78,6 +78,7 @@ com\atguigu\modules\sys\service\SysConfigService.class
 com\atguigu\common\utils\Constant$CloudService.class
 com\atguigu\common\xss\SQLFilter.class
 com\atguigu\modules\sys\entity\SysRoleEntity.class
+META-INF\spring-configuration-metadata.json
 com\atguigu\common\validator\group\QcloudGroup.class
 com\atguigu\modules\sys\entity\SysMenuEntity.class
 com\atguigu\modules\job\dao\ScheduleJobDao.class

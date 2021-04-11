@@ -5,6 +5,7 @@ import com.atguigu.core.bean.QueryCondition;
 import com.atguigu.core.bean.Resp;
 import com.atguigu.gmall.pms.entity.AttrAttrgroupRelationEntity;
 import com.atguigu.gmall.pms.service.AttrAttrgroupRelationService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 属性&属性分组关联
@@ -26,6 +28,19 @@ import java.util.Arrays;
 public class AttrAttrgroupRelationController {
     @Autowired
     private AttrAttrgroupRelationService attrAttrgroupRelationService;
+
+
+    /**
+     * 删除组与组属性关联关系
+     */
+    @ApiOperation("删除组与组属性关联关系")
+    @PostMapping("/delete/attr")
+    public Resp<Object> deleteByGidAndAttrId(@RequestBody List<AttrAttrgroupRelationEntity> relationEntities) {
+        this.attrAttrgroupRelationService.remove(new QueryWrapper<AttrAttrgroupRelationEntity>().
+                eq("attr_group_id", relationEntities.get(0).getAttrGroupId()).
+                eq("attr_id", relationEntities.get(0).getAttrId()));
+        return Resp.ok("删除成功!");
+    }
 
     /**
      * 列表
@@ -61,7 +76,7 @@ public class AttrAttrgroupRelationController {
     public Resp<Object> save(@RequestBody AttrAttrgroupRelationEntity attrAttrgroupRelation) {
         attrAttrgroupRelationService.save(attrAttrgroupRelation);
 
-        return Resp.ok(null);
+        return Resp.ok("保存成功");
     }
 
     /**
