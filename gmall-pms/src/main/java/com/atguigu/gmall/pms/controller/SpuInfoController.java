@@ -1,13 +1,17 @@
 package com.atguigu.gmall.pms.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
 import com.atguigu.core.bean.PageVo;
+import com.atguigu.core.bean.Query;
 import com.atguigu.core.bean.QueryCondition;
 import com.atguigu.core.bean.Resp;
 import com.atguigu.gmall.pms.vo.SpuInfoVO;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +51,27 @@ public class SpuInfoController {
         return Resp.ok(pageVo);
     }
 
+    @ApiOperation("分页查询已发布spu商品信息")
+    @PostMapping("{status}")
+    public Resp<List<SpuInfoEntity>> querySpuInfoByStatus(@RequestBody QueryCondition condition,
+                                                          @PathVariable("status") Integer status) {
+
+        IPage<SpuInfoEntity> spuInfoEntityIPage = this.spuInfoService.page(
+                new Query<SpuInfoEntity>().getPage(condition),
+                new QueryWrapper<SpuInfoEntity>().eq("publish_status", status));
+        return Resp.ok(spuInfoEntityIPage.getRecords());
+    }
+
+    /**
+     * 列表
+     */
+    @ApiOperation("分页查询(排序)")
+    @PostMapping("list")
+    Resp<List<SpuInfoEntity>> querySpuPage(QueryCondition queryCondition) {
+        PageVo page = spuInfoService.queryPage(queryCondition);
+        return Resp.ok((List<SpuInfoEntity>) page.getList());
+    }
+
     /**
      * 列表
      */
@@ -55,7 +80,6 @@ public class SpuInfoController {
     @PreAuthorize("hasAuthority('pms:spuinfo:list')")
     public Resp<PageVo> list(QueryCondition queryCondition) {
         PageVo page = spuInfoService.queryPage(queryCondition);
-
         return Resp.ok(page);
     }
 
