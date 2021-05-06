@@ -1,10 +1,17 @@
 package com.atguigu.gmall.search.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.atguigu.gmall.search.service.SearchService;
+import com.atguigu.gmall.search.vo.GoodsVO;
 import com.atguigu.gmall.search.vo.SearchParamVO;
+import com.atguigu.gmall.search.vo.SearchResponse;
+import com.atguigu.gmall.search.vo.SearchResponseAttrVO;
 import io.searchbox.client.JestClient;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
+import io.searchbox.core.search.aggregation.ChildrenAggregation;
+import io.searchbox.core.search.aggregation.MetricAggregation;
+import io.searchbox.core.search.aggregation.TermsAggregation;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.search.join.ScoreMode;
@@ -18,8 +25,13 @@ import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class SearchServiceImpl implements SearchService {
@@ -27,17 +39,104 @@ public class SearchServiceImpl implements SearchService {
     private JestClient jestClient;
 
     @Override
-    public void search(SearchParamVO searchParamVO) {
+    public SearchResponse search(SearchParamVO searchParamVO) {
         try {
             String queryDSL = buildDSL(searchParamVO);
             System.out.println(queryDSL);
             Search search = new Search.Builder(queryDSL).addIndex("goods").addType("info").build();
             SearchResult result = this.jestClient.execute(search);
-            System.out.println(result);
+            // 解析搜索结果
+            SearchResponse searchResponse = analyzeResult(result);
+            // 设置分页参数
+            searchResponse.setPageNum(searchParamVO.getPageNum());
+            searchResponse.setPageSize(searchParamVO.getPageSize());
+            searchResponse.setTotal(result.getTotal());
+            return searchResponse;
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
+    }
 
+    /**
+     * 解析搜索结果 方法
+     *
+     * @param result
+     * @return
+     */
+    private SearchResponse analyzeResult(SearchResult result) {
+        SearchResponse searchResponse = new SearchResponse();
+        // 获取所有聚合
+        MetricAggregation aggregations = result.getAggregations();
+        // 解析品牌的聚合结果集 格式：“品牌”(写死)------------------>[{"id":"品牌id","name":"品牌名称"},{"id":"品牌id","name":"品牌名称"},{"id":"品牌id","name":"品牌名称"}...]
+        // 获取品牌聚合
+        TermsAggregation brandAgg = aggregations.getTermsAggregation("brandAgg");
+        // 获取品牌聚合中的所有桶
+        List<TermsAggregation.Entry> brandAggBuckets = brandAgg.getBuckets();
+        // 判断品牌聚合是否为空
+        if (!CollectionUtils.isEmpty(brandAggBuckets)) {
+            // 初始化品牌vo对象
+            SearchResponseAttrVO brand = new SearchResponseAttrVO();
+            // 写死品牌聚合名称
+            brand.setName("品牌");
+            List<String> values = brandAggBuckets.stream().map(brandAggBucket -> {
+                Map<String, String> map = new HashMap<>();
+                map.put("id", brandAggBucket.getKeyAsString());
+                // 获取品牌id桶中子聚合（品牌的名称）
+                TermsAggregation brandNameAgg = brandAggBucket.getTermsAggregation("brandNameAgg");
+                map.put("name", brandNameAgg.getBuckets().get(0).getKeyAsString());
+                return JSON.toJSONString(map);
+            }).collect(Collectors.toList());
+            // 设置品牌的所有聚合值
+            brand.setValue(values);
+            searchResponse.setBrand(brand);
+
+        }
+        // 解析分类的聚合结果集
+        TermsAggregation categoryAgg = aggregations.getTermsAggregation("categoryAgg");
+        List<TermsAggregation.Entry> categoryAggBuckets = categoryAgg.getBuckets();
+        // 判断分类聚合是否为空
+        if (!CollectionUtils.isEmpty(categoryAggBuckets)) {
+            // 初始化分类vo对象
+            SearchResponseAttrVO category = new SearchResponseAttrVO();
+            // 写死分类聚合名称
+            category.setName("分类");
+            List<String> values = categoryAggBuckets.stream().map(categoryAggBucket -> {
+                Map<String, String> map = new HashMap<>();
+                map.put("id", categoryAggBucket.getKeyAsString());
+                // 获取分类id桶中子聚合（品牌的名称）
+                TermsAggregation categoryNameAgg = categoryAggBucket.getTermsAggregation("categoryNameAgg");
+                map.put("name", categoryNameAgg.getBuckets().get(0).getKeyAsString());
+                return JSON.toJSONString(map);
+            }).collect(Collectors.toList());
+            // 设置品牌的所有聚合值
+            category.setValue(values);
+            searchResponse.setCatelog(category);
+
+        }
+        // 解析搜索属性的聚合结果集 格式：属性名+属性id------------------>属性值1，属性值2，属性值3，属性值4，属性值5
+        ChildrenAggregation attrAgg = aggregations.getChildrenAggregation("attrAgg");
+        TermsAggregation attrIdAgg = attrAgg.getTermsAggregation("attrIdAgg");
+        List<TermsAggregation.Entry> attrIdAggBuckets = attrIdAgg.getBuckets();
+        List<SearchResponseAttrVO> attrs = attrIdAggBuckets.stream().map(attrIdAggBucket -> {
+            SearchResponseAttrVO attr = new SearchResponseAttrVO();
+            //属性的id
+            attr.setProductAttributeId(Long.parseLong(attrIdAggBucket.getKeyAsString()));
+            TermsAggregation attrNameAgg = attrIdAggBucket.getTermsAggregation("attrNameAgg");
+            // 属性的名字
+            attr.setName(attrNameAgg.getBuckets().get(0).getKeyAsString());
+            TermsAggregation attrValueAgg = attrIdAggBucket.getTermsAggregation("attrValueAgg");
+            List<TermsAggregation.Entry> attrValueAggBuckets = attrValueAgg.getBuckets();
+            List<String> values = attrValueAggBuckets.stream().map(TermsAggregation.Entry::getKeyAsString).collect(Collectors.toList());
+            attr.setValue(values);
+            return attr;
+        }).collect(Collectors.toList());
+        searchResponse.setAttrs(attrs);
+
+        // 解析商品列表的结果集
+        searchResponse.setProducts(result.getSourceAsObjectList(GoodsVO.class, false));
+
+        return searchResponse;
     }
 
     /**
@@ -53,7 +152,8 @@ public class SearchServiceImpl implements SearchService {
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
         // 构建查询条件
         String keyword = searchParamVO.getKeyword();
-        boolQuery.must(QueryBuilders.matchQuery("name", keyword).operator(Operator.AND));
+        if (StringUtils.isNotBlank(keyword))
+            boolQuery.must(QueryBuilders.matchQuery("name", keyword).operator(Operator.AND));
         // 构建过滤条件
         // 品牌
         String[] brands = searchParamVO.getBrand();

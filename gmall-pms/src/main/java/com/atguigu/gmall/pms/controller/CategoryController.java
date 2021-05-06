@@ -8,6 +8,7 @@ import java.util.Map;
 import com.atguigu.core.bean.PageVo;
 import com.atguigu.core.bean.QueryCondition;
 import com.atguigu.core.bean.Resp;
+import com.atguigu.gmall.pms.vo.CategoryVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,15 @@ import com.atguigu.gmall.pms.service.CategoryService;
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
+
+    /**
+     * 获取某个菜单的子菜单
+     */
+    @GetMapping("{pid}")
+    public Resp<List<CategoryVO>> queryCategoriesByPid(@PathVariable("pid") Integer pid) {
+        List<CategoryVO> categoryVOS = this.categoryService.queryCategoriesByPid(pid);
+        return Resp.ok(categoryVOS);
+    }
 
     /**
      * 列表

@@ -11,6 +11,7 @@ com\atguigu\gmall\pms\vo\SpuAttributeValueVO.class
 com\atguigu\gmall\pms\entity\CategoryEntity.class
 com\atguigu\gmall\pms\entity\SpuImagesEntity.class
 com\atguigu\gmall\pms\entity\AttrEntity.class
+com\atguigu\gmall\pms\vo\CategoryVO.class
 com\atguigu\gmall\pms\api\GmallPmsApi.class
 com\atguigu\gmall\pms\entity\SpuInfoDescEntity.class
 com\atguigu\gmall\pms\entity\SpuCommentEntity.class
